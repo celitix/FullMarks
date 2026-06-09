@@ -49,6 +49,17 @@ async function getShopifyAccessToken() {
   }
 }
 
+// ==========================================
+// NEW: Home Route (Health Check)
+// ==========================================
+app.get("/", (req, res) => {
+  res.status(200).json({
+    statusCode: 200,
+    success: true,
+    message: "Shopify Bridge Server is up and running.",
+  });
+});
+
 app.post("/api/order-status", async (req, res) => {
   const { order_number, mobile_number } = req.body;
 
@@ -143,6 +154,19 @@ app.post("/api/order-status", async (req, res) => {
         "An internal server error occurred while pulling your order details.",
     });
   }
+});
+
+// ==========================================
+// NEW: 404 Catch-All Route
+// (Must be placed after all defined routes)
+// ==========================================
+app.use((req, res) => {
+  res.status(404).json({
+    statusCode: 404,
+    success: false,
+    status_type: "NOT_FOUND",
+    message: "The requested route does not exist on this server.",
+  });
 });
 
 app.listen(PORT, () => {
