@@ -53,7 +53,7 @@ async function getShopifyAccessToken() {
 // NEW: Home Route (Health Check)
 // ==========================================
 app.get("/", (req, res) => {
-  res.status(200).json({
+  return res.status(200).json({
     // statusCode: 200,
     success: true,
     message: "Shopify Bridge Server is up and running.",
